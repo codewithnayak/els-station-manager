@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using HttpUtility;
+using HttpUtility.Response;
+using Microsoft.AspNetCore.Mvc;
 using StationManagerApi.Models;
 using StationManagerApi.Services;
+using StationManagerApi.Validation;
 
 namespace StationManagerApi.Controllers
 {
@@ -10,16 +14,34 @@ namespace StationManagerApi.Controllers
     {
         private readonly IStationManagerService _stationManagerService;
         private readonly ILogger<StationController> _logger;
+        private readonly IValidator<CreateStationRequest> _validator;
         public StationController(IStationManagerService stationManagerService
-            , ILogger<StationController> logger)
+            , ILogger<StationController> logger,
+            IValidator<CreateStationRequest> validator)
         {
             _stationManagerService = stationManagerService;
             _logger = logger;
+            _validator = validator;
         }
 
         [HttpPost("add")]
         public async Task<IActionResult> CreateStation([FromBody] CreateStationRequest createStationRequest)
         {
+            var modelState = _validator.Validate(createStationRequest);
+            if (!modelState.IsValid)
+            {
+
+                var response = new ResponseBase<Nothing>()
+                {
+                    Errors = modelState.Errors.Select(e => new Error
+                    {
+                        Field = e.PropertyName,
+                        Message = e.ErrorMessage
+                    })
+                };
+
+                return BadRequest(response);
+            }
             var createStationResponse = await _stationManagerService.CreateStation(createStationRequest);
             var routeValues = new
             {
@@ -27,7 +49,10 @@ namespace StationManagerApi.Controllers
                 id = createStationResponse.StationId
             };
 
-            return CreatedAtRoute(routeValues, createStationResponse);
+            return CreatedAtRoute(routeValues, new ResponseBase<CreateStationResponse>
+            {
+                Data = createStationResponse
+            });
         }
 
         [HttpGet("{id}", Name = "GetStation")]

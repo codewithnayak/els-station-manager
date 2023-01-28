@@ -33,7 +33,7 @@ namespace HttpUtility.Middlewares
             catch (Exception ex)
             {
                 logger.LogError(ex, $"An exception occurred with messagem : {ex.Message}");
-                var response = new ResponseBase()
+                var response = new ResponseBase<Nothing>
                 {
                     Errors = new Error[]
                     {

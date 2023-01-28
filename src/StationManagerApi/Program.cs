@@ -1,15 +1,21 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using HttpUtility.Middlewares;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StationManagerApi.Db;
 using StationManagerApi.Services;
-
+using StationManagerApi.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.
+    AddControllers()
+    .AddJsonOptions(_ => _.JsonSerializerOptions.DefaultIgnoreCondition =
+     System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull);
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -17,6 +23,8 @@ builder.Services.AddTransient<IStationManagerService, StationManagerService>();
 
 builder.Services.AddDbContext<StationDbContext>( _ => _.UseSqlServer(builder.Configuration.GetConnectionString("StationDbConnectionString")));
 builder.Services.AddAutoMapper(System.Reflection.Assembly.GetExecutingAssembly());
+builder.Services.AddValidatorsFromAssemblyContaining<CreateStationValidator>();
+
 builder.Host.UseSerilog((ctx ,config) => 
 {
     /*

@@ -2,7 +2,19 @@
 {
     public class Error
     {
-        public int Code { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? Code { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Message { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string? Field { get; set; }
     }
 }

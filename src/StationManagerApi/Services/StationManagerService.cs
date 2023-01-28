@@ -33,5 +33,10 @@ namespace StationManagerApi.Services
             };
             
         }
+
+        public Task<GetStationResponse> GetStation(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
