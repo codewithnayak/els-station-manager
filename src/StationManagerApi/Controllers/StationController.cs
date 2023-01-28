@@ -9,9 +9,12 @@ namespace StationManagerApi.Controllers
     public class StationController : ControllerBase
     {
         private readonly IStationManagerService _stationManagerService;
-        public StationController(IStationManagerService stationManagerService)
+        private readonly ILogger<StationController> _logger;
+        public StationController(IStationManagerService stationManagerService
+            , ILogger<StationController> logger)
         {
             _stationManagerService = stationManagerService;
+            _logger = logger;
         }
 
         [HttpPost("add")]

@@ -1,5 +1,6 @@
 ﻿using HttpUtility.Response;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace HttpUtility.Middlewares
 {
@@ -23,7 +24,7 @@ namespace HttpUtility.Middlewares
         /// </summary>
         /// <param name="httpContext"></param>
         /// <returns></returns>
-        public async Task InvokeAsync(HttpContext httpContext)
+        public async Task InvokeAsync(HttpContext httpContext,ILogger<GlobalExceptionMiddleware> logger)
         {
             try
             {
@@ -31,7 +32,7 @@ namespace HttpUtility.Middlewares
             }
             catch (Exception ex)
             {
-                //TODO: Should ideally also log the message with error and stack trace .
+                logger.LogError(ex, $"An exception occurred with messagem : {ex.Message}");
                 var response = new ResponseBase()
                 {
                     Errors = new Error[]

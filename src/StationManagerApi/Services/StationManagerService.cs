@@ -8,10 +8,14 @@ namespace StationManagerApi.Services
     {
         private readonly StationDbContext _stationDbContext;
         private readonly IMapper _mapper;
-        public StationManagerService(StationDbContext stationDbContext , IMapper mapper)
+        private readonly ILogger<StationManagerService> _logger;
+        public StationManagerService(StationDbContext stationDbContext , 
+            IMapper mapper,
+            ILogger<StationManagerService> logger)
         {
             _stationDbContext = stationDbContext;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<CreateStationResponse> CreateStation(CreateStationRequest createStationRequest)
@@ -19,6 +23,8 @@ namespace StationManagerApi.Services
             var station = _mapper.Map<Station>(createStationRequest);
             await _stationDbContext.Stations.AddAsync(station);
             await _stationDbContext.SaveChangesAsync();
+
+            _logger.LogInformation("New station created");
 
             return new CreateStationResponse
             {
