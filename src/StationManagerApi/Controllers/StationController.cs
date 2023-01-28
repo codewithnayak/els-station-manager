@@ -30,9 +30,10 @@ namespace StationManagerApi.Controllers
             return CreatedAtRoute(routeValues, createStationResponse);
         }
 
-        [HttpGet("{id}",Name ="GetStation")]
+        [HttpGet("{id}", Name = "GetStation")]
         public async Task<IActionResult> GetStation(string id)
         {
+            //will be implemented next 
             await Task.CompletedTask;
             return Ok();
         }
