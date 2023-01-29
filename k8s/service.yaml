@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: iels-station-manager-service
+  labels:
+    app: iels-station-manager
+spec:
+  type: LoadBalancer
+  selector:
+    app: iels-station-manager
+  ports:
+  - port: 7500
+    targetPort: 80
