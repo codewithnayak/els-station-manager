@@ -4,7 +4,6 @@ using HttpUtility.Response;
 using Microsoft.AspNetCore.Mvc;
 using StationManagerApi.Models;
 using StationManagerApi.Services;
-using StationManagerApi.Validation;
 
 namespace StationManagerApi.Controllers
 {
@@ -15,6 +14,13 @@ namespace StationManagerApi.Controllers
         private readonly IStationManagerService _stationManagerService;
         private readonly ILogger<StationController> _logger;
         private readonly IValidator<CreateStationRequest> _validator;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stationManagerService"></param>
+        /// <param name="logger"></param>
+        /// <param name="validator"></param>
         public StationController(IStationManagerService stationManagerService
             , ILogger<StationController> logger,
             IValidator<CreateStationRequest> validator)
@@ -24,6 +30,11 @@ namespace StationManagerApi.Controllers
             _validator = validator;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="createStationRequest"></param>
+        /// <returns></returns>
         [HttpPost("add")]
         public async Task<IActionResult> CreateStation([FromBody] CreateStationRequest createStationRequest)
         {
@@ -42,6 +53,7 @@ namespace StationManagerApi.Controllers
 
                 return BadRequest(response);
             }
+
             var createStationResponse = await _stationManagerService.CreateStation(createStationRequest);
             var routeValues = new
             {

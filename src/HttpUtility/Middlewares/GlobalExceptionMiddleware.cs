@@ -32,7 +32,7 @@ namespace HttpUtility.Middlewares
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, $"An exception occurred with messagem : {ex.Message}");
+                logger.LogError(ex, $"An exception occurred with message : {ex.Message}");
                 var response = new ResponseBase<Nothing>
                 {
                     Errors = new Error[]
@@ -45,6 +45,7 @@ namespace HttpUtility.Middlewares
                     }
                 };
 
+                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await httpContext.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(response));
             }
             

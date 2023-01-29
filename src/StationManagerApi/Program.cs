@@ -38,7 +38,8 @@ builder.Host.UseSerilog((ctx ,config) =>
     }
     */
     //Change it once deployment is ready as default run is devlopment now .
-    config.WriteTo.Seq("http://localhost:80", Serilog.Events.LogEventLevel.Debug);
+    // config.WriteTo.Seq("http://localhost:80", Serilog.Events.LogEventLevel.Debug);
+    config.WriteTo.Console(Serilog.Events.LogEventLevel.Debug);
 });
 
 var app = builder.Build();

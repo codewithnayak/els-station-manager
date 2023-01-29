@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["src/StationManagerApi/StationManagerApi.csproj", "src/StationManagerApi/"]
+COPY ["src/HttpUtility/HttpUtility.csproj", "src/HttpUtility/"]
 RUN dotnet restore "src/StationManagerApi/StationManagerApi.csproj"
 COPY . .
 WORKDIR "/src/src/StationManagerApi"
