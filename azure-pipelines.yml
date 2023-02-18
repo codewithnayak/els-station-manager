@@ -10,7 +10,7 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '4ceb61b5-faa1-4c18-95eb-cdf5172bbacf'
+  dockerRegistryServiceConnection: 'ielscontainerregistry'
   imageRepository: 'codewithnayakelsstationmanager'
   containerRegistry: 'ielscontainerregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
