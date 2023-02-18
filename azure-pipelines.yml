@@ -26,6 +26,8 @@ stages:
   - job: Build
     displayName: Build
     pool:
+      name: Default
+      demands: mydockeragent
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
