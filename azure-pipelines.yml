@@ -10,14 +10,11 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'ielscontainerregistry'
+  dockerRegistryServiceConnection: 'acrconnection'
   imageRepository: 'codewithnayakelsstationmanager'
-  containerRegistry: 'ielscontainerregistry.azurecr.io'
+  containerRegistry: 'practiceazuredevops.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
-
-  # Agent VM image name
-  vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: Build
