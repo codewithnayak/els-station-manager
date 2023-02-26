@@ -16,6 +16,12 @@ variables:
 
 steps:
 - task: DotNetCoreCLI@2
+  displayName: build
   inputs:
     command: 'build'
     projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: test
+  inputs:
+    command: 'test'
