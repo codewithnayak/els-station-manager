@@ -68,11 +68,29 @@ namespace StationManagerApi.Controllers
         }
 
         [HttpGet("{id}", Name = "GetStation")]
-        public async Task<IActionResult> GetStation(string id)
+        public  IActionResult GetStation(string id)
         {
-            //will be implemented next 
-            await Task.CompletedTask;
-            return Ok();
+            var station = _stationManagerService.GetStation(id);
+
+            if (station == null) 
+            {
+                return NotFound(new ResponseBase<Nothing>
+                {
+                    Errors = new Error[] 
+                    { 
+                        new Error
+                        {
+                            Code = 404,
+                            Message = "No resorce found for this id "
+                        }
+                    }
+                });
+            }
+
+            return Ok(new ResponseBase<GetStationResponse>
+            {
+                Data = station
+            });
         }
     }
 }

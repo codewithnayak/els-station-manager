@@ -12,6 +12,10 @@ namespace StationManagerApi.Profiles
                 .ForMember(d => d.StationIdentifier , opt => opt.MapFrom(s => System.Guid.NewGuid()))
                 .ForMember(d => d.StationCode, opt => opt.MapFrom(s => $"{s.StateCode}/PS/01"))
                 .ForMember(d => d.Address, opt => opt.MapFrom(s => s.Address));
+
+            CreateMap<Db.Address, Models.Address>();
+            CreateMap<Station, GetStationResponse>()
+                .ForMember(d => d.Address, opt => opt.MapFrom(s => s.Address));
         }
     }
 }

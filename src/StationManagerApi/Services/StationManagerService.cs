@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using StationManagerApi.Db;
 using StationManagerApi.Models;
 
@@ -34,9 +35,16 @@ namespace StationManagerApi.Services
             
         }
 
-        public Task<GetStationResponse> GetStation(string id)
+        public  GetStationResponse GetStation(string id)
         {
-            throw new NotImplementedException();
+
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Station id can not be null or empty");
+
+            var station =  _stationDbContext.Stations
+                           .Include(_ => _.Address)
+                           .FirstOrDefault(_ => _.StationIdentifier == Guid.Parse(id));
+
+            return _mapper.Map<GetStationResponse>(station);
         }
     }
 }

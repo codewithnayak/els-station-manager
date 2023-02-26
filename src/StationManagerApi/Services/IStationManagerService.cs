@@ -6,6 +6,6 @@ namespace StationManagerApi.Services
     {
         Task<CreateStationResponse> CreateStation(CreateStationRequest createStationRequest);
 
-        Task<GetStationResponse> GetStation(string id);
+        GetStationResponse GetStation(string id);
     }
 }
