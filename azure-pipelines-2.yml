@@ -16,9 +16,6 @@ variables:
 
 steps:
 - task: DotNetCoreCLI@2
-  displayName: Restore
   inputs:
-    command: restore
+    command: 'build'
     projects: '**/*.csproj'
-    feedsToUse: config
-    nugetConfigPath: NuGet.config
