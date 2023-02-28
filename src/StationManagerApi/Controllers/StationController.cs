@@ -38,6 +38,7 @@ namespace StationManagerApi.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> CreateStation([FromBody] CreateStationRequest createStationRequest)
         {
+            //something
             var modelState = _validator.Validate(createStationRequest);
             if (!modelState.IsValid)
             {
